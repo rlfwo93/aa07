@@ -1,0 +1,59 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<!-- Plotly.js -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+	<h2>Hello streaming!</h2>
+
+	<div id="graph"></div>
+
+	<script>
+		function rand() { 
+			return Math.random(); //0~1미만 실수 리턴
+		}
+
+		trace1 = {
+			y: [1,2,3].map(rand),  //rand 를 세번 실행해서 1,2,3 각각에 넣음
+			//3개의 요소를 가진 배열이라는 뜻
+			mode: 'lines', //lines만 그려줌
+			line: {color: '#80CAF6'} // 색설정.
+		};
+
+		trace2 = {
+			y: [1,2,3].map(rand),  //rand 를 세번 실행해서 1,2,3 각각에 넣음
+			//3개의 요소를 가진 배열이라는 뜻
+			mode: 'lines', //lines만 그려줌
+			line: {color: '#DF56F1'} // 색설정.
+		};
+
+		trace3 = {
+			y: [1,2,3].map(rand),  //rand 를 세번 실행해서 1,2,3 각각에 넣음
+			//3개의 요소를 가진 배열이라는 뜻
+			mode: 'lines', //lines만 그려줌
+			line: {color: '#00FF00'} // 색설정.
+		};
+
+		data = [trace1,trace2,trace3];  //trace를 data의 값으로 설정
+
+		Plotly.plot('graph', data); //data를 그림.
+
+
+//  형식:setInterval(function() { ... }, 지연시간);
+
+		var cnt = 0;
+
+		var interval = setInterval(function() {// setInterval 일정한 시간 간격으로 작업을 수행
+
+			cnt++;
+			Plotly.extendTraces('graph', { //extendTraces로 그래프를 확장시킴.
+				y: [[rand()],[rand()],[rand()]] //2초에 한번씩 추가가 되기떄문에 rand를 배열로 선언.
+			}, [0,1,2]); // 0번째니까 0으로
+
+			if(cnt == 100) clearInterval(interval); // clearInterval 함수를 사용하여 중지
+		}, 300);
+
+	</script>
+</body>
+</html>
